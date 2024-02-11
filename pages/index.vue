@@ -2,11 +2,15 @@
 
     <login/>
 
+    
+
+
+
 </template>
 
 <script>
 
-import login from '../components/login.vue';
+import login from '../pages/login/login.vue';
 
 
 export default {
