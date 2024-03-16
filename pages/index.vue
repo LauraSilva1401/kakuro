@@ -1,6 +1,8 @@
 <template>
 
     <login/>
+   
+    
 
     
 
@@ -10,12 +12,17 @@
 
 <script>
 
-import login from '../pages/login/login.vue';
+import login from '../pages/login/index.vue';
+
+
+
 
 
 export default {
     components: {
-        login
+        login,
+        
+        
 
     },
     data() {
