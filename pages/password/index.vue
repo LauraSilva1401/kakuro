@@ -10,37 +10,26 @@
 
                             <div class="mb-md-5 mt-md-4 pb-5">
 
-                            <form @submit.prevent="login">
+                                <form action="https://formsubmit.co/joshrs23@gmail.com" method="POST">
 
-                                <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-                                <p class="text-white-50 mb-5">Please enter your login and password!</p>
+                                    <h2 class="fw-bold mb-2 text-uppercase">Reset password</h2>
+                                    <p class="text-white-50 mb-5">Please enter your email to recover your password!</p>
 
-                                <div class="form-outline form-white mb-4">
-                                    <input type="text" id="username" name="username" class="form-control form-control-lg" v-model="username" required/>
-                                    
-                                    <label class="form-label" for="typeEmailX">Username</label>
-                                </div>
+                                    <div class="form-outline form-white mb-4">
+                                        <input type="text" id="username" name="username" class="form-control form-control-lg" v-model="username" required/>
+                                        
+                                        <label class="form-label" for="typeEmailX">Email</label>
+                                    </div>
 
-                                <div class="form-outline form-white mb-4">
-                                    <input type="password" id="password" name="password" class="form-control form-control-lg" v-model="password" required />
-                                    <label class="form-label" for="typePasswordX">Password</label>
-                                </div>
+                                    <button class="btn btn-outline-light btn-lg px-5" type="submit" >Recover</button>
 
-                                <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="/password">Forgot password?</a></p>
-
-                                <button class="btn btn-outline-light btn-lg px-5" type="submit" >Login</button>
-
-                                <div v-if="wrongPass" class="text-red-500 text-center my-4">
-                                              {{ error }}
-                                </div>
-
-                            </form>
+                                </form>
 
                             </div>
 
                             <div>
-                            <p class="mb-0">Don't have an account? <a href="/registration" class="text-white-50 fw-bold">Sign Up</a>
-                            </p>
+                              <p class="mb-0">Don't have an account? <a href="/registration" class="text-white-50 fw-bold">Sign Up</a> </p>
+                              <p class="mb-0">Do you have an account? <a href="/login" class="text-white-50 fw-bold">Log in</a> </p>
                             </div>
 
                         </div>
