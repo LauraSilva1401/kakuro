@@ -10,3 +10,9 @@
   </div>
 </template>
 
+<style>
+
+body {
+  background-color: #193b60; 
+}
+</style>
