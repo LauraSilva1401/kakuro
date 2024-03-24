@@ -1,41 +1,37 @@
 <template>
  
       
+  <navbar class="navbar"/>
 
-          <navbar class="navbar"/>
+  <NuxtPage class="nuxt-page"/>
 
-          <NuxtPage class="nuxt-page"/>
+  <Footer/>
 
-
-          <footer1/>
-
-      
  
 </template>
 
 <script>
   
-  import navbar from './components/navbar.vue';
-  import footer from './components/footer1.vue';
+    import navbar from './components/navbar.vue';
+    import Footer from './components/Footer.vue';
 
-  export default defineComponent ({
-    components: {
-      navbar,
-      footer
-    },
-  })
+    export default defineComponent ({
+        components: {
+            navbar,
+        },
+    })
 
 </script>
 
 <style>
 
     body {
-      background-color: #193b60; 
+        background-color: #193b60; 
     }
 
     .container {
-        margin-top: 300px;
-        margin-bottom: 300px;
+        margin-top: 5%;
+        margin-bottom: 5%;
     }
 
 </style>
