@@ -2,11 +2,6 @@
 
     <login/>
    
-    
-
-    
-
-
 
 </template>
 

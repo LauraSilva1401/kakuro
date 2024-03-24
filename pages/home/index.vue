@@ -105,22 +105,37 @@ import axios from "axios";
   
   <style scoped>
 
+  
  
   .logo {
-    font-size: 100px;
+    font-size: 150px;
     color: #4000ff; 
     font-family: 'Your-Pixel-Font', sans-serif;
+    font-weight: bold;
   }
   
-  .pixel-art {
-    
-  }
+  
   
   .square {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     background-color: #ff5722;
-    margin: 2px;
+    margin-right: 8px;
+  }
+
+  .my-4 {
+
+    font-size: 50px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
+    font-weight: bold;
+
+  }
+
+  .btn {
+    font-size: 35px;
+    width: 150px;
+    height: 100px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
   }
   
   .bg-orange {
@@ -130,6 +145,18 @@ import axios from "axios";
   .bg-gray {
     background-color: #3f514c; 
   }
+
+  
+@media (max-width: 768px) {
+  .logo {
+    font-size: 2rem; 
+  }
+  .square {
+    width: 15vw; 
+    height: 15vw; 
+    margin: 1.5vw;
+  }
+}
   
   </style>
   
