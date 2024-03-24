@@ -33,7 +33,7 @@ import type { setBlockTracking } from 'vue';
                 
             </ul>
             
-            <button class="btn btn-outline-success" type="button" @click="logOutUser">Logout</button>
+            <button v-if="isLogin" class="btn btn-outline-success" type="button" @click="logOutUser">Logout</button>
     
             
             </div>
@@ -45,6 +45,16 @@ import type { setBlockTracking } from 'vue';
 
 <script>
 export default {
+    data() {
+    return {
+        isLogin: false,
+    };
+  },
+  mounted() {console.log()
+    if (localStorage.getItem("KakuroToken")) {
+        this.isLogin = true;
+    }
+  },
     methods: {
         collapseNavbar() {
             if (window.innerWidth < 992) { 
@@ -75,7 +85,7 @@ export default {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: #efcbc9 !important;
+    background-color: white !important;
 }
 
 .btn {

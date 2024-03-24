@@ -32,7 +32,7 @@
 
 footer{
 
-    background-color: #efcbc9;
+    background-color: white;
     margin-bottom: 0 !important;
 
    
