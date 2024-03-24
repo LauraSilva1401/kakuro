@@ -43,10 +43,6 @@
       async getHistory() {
         try {
 
-          debugger;
-          console.log("Mensaje");
-          debugger;
-
           const userId = localStorage.getItem('KakuroId');
           
 
@@ -68,7 +64,7 @@
 
           
           const data = response.data
-          debugger;
+
           if (response.data.success) {
             
             this.history = data.histories;

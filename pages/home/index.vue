@@ -62,10 +62,7 @@ import axios from "axios";
    methods: {
      async getLevels() {
        try {
-         debugger;
-         console.log("Mensaje");
-         debugger;
-         
+
          const response = await axios.get(
            "https://espacionebula.com:8000/get-levels",
            
@@ -76,7 +73,7 @@ import axios from "axios";
              mode: "cors",
            }
          );
-         debugger;
+
          if (response.data.success) {
 
             this.levels = response.data.levels

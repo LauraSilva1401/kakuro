@@ -6,24 +6,24 @@ export const useUserStore = defineStore('user', {
 
     id: '',
     username: '',
-
+    isAuthenticated: !!localStorage.getItem('KakuroToken'),
   }),
 
   actions: {
 
     setuserId(id) {
       this.id = id;
+      this.isAuthenticated = true;
     },
     setUsername(username) {
       this.username = username;
     },
 
     logOutUser(){
-      localStorage.removeItem('CupidConnectEmail');
-      localStorage.removeItem('CupidConnectuser');
-      localStorage.removeItem('CupidConnectToken');
-      localStorage.removeItem('CupidConnectType');
-      localStorage.removeItem('CupidConnectId');
+      localStorage.removeItem('KakuroUsername');
+      localStorage.removeItem('KakuroToken');
+      localStorage.removeItem('KakuroId');
+      this.isAuthenticated = false;
     }
   },
 })
