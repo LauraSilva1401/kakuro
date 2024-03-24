@@ -27,21 +27,11 @@
           
           <h2 class="text-center my-4">Select Game Difficulty</h2>
           <div class="d-flex justify-content-center">
-            <div class="p-2">
-              <nuxt-link to="/easy">
-                <button type="button" class="btn btn-success">Easy</button>
-              </nuxt-link>
+             
+            <div v-for="level in levels" :key="level._id" class="level-button p-2">
+                <button type="button" class="btn btn-success" @click="goToGame(level.name)">{{ level.name }}</button>
             </div>
-            <div class="p-2">
-              <nuxt-link to="/medium">
-                <button type="button" class="btn btn-warning">Medium</button>
-              </nuxt-link>
-            </div>
-            <div class="p-2">
-              <nuxt-link to="/hard">
-                <button type="button" class="btn btn-danger">Hard</button>
-              </nuxt-link>
-            </div>
+           
           </div>
         </div>
       </div>
@@ -49,6 +39,67 @@
   </template>
   
   <script>
+
+import axios from "axios";
+ 
+ export default defineComponent({
+   components: {},
+   created() {},
+   mounted() {
+
+    if(!localStorage.getItem('KakuroToken')){
+            this.$router.push('/login');
+        }   
+
+        this.getLevels(); // async funct
+
+   },
+   data() {
+     return {
+       levels: []
+     };
+   },
+   methods: {
+     async getLevels() {
+       try {
+         debugger;
+         console.log("Mensaje");
+         debugger;
+         
+         const response = await axios.get(
+           "https://espacionebula.com:8000/get-levels",
+           
+           {
+             headers: {
+               "Access-Control-Allow-Origin": "*",
+             },
+             mode: "cors",
+           }
+         );
+         debugger;
+         if (response.data.success) {
+
+            this.levels = response.data.levels
+
+         
+         } else {
+           
+           this.error = response.data.error;
+           console.log(response.data.error);
+         }
+       } catch (error) {
+         console.error(error);
+       }
+     },
+
+     goToGame(levelName) {
+      this.$router.push({ path: `/game`, query: { level: levelName } });
+    },
+
+   },
+   setup() {},
+   
+ });
   
   </script>
   

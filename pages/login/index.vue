@@ -101,7 +101,7 @@ export default defineComponent({
           this.userData.setUsername(localStorage.getItem("KakuroUsername"));
           this.userData.setuserId(localStorage.getItem("KakuroId"));
  
-          this.$router.push("/game");
+          this.$router.push("/home");
         } else {
           this.wrongPass = true;
           this.error = response.data.error;
