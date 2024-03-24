@@ -10,18 +10,22 @@
 
                             <div class="mb-md-5 mt-md-4 pb-5">
 
-                                <form action="https://formsubmit.co/joshrs23@gmail.com" method="POST">
+                                <form @submit.prevent="resetPassword">
 
                                     <h2 class="fw-bold mb-2 text-uppercase">Reset password</h2>
                                     <p class="text-white-50 mb-5">Please enter your email to recover your password!</p>
 
                                     <div class="form-outline form-white mb-4">
-                                        <input type="text" id="username" name="username" class="form-control form-control-lg" v-model="username" required/>
+                                        <input type="text" id="email" name="email" class="form-control form-control-lg" v-model="email" required/>
                                         
                                         <label class="form-label" for="typeEmailX">Email</label>
                                     </div>
 
                                     <button class="btn btn-outline-light btn-lg px-5" type="submit" >Recover</button>
+
+                                    <div v-if="errorEmail" class="text-red-500 text-center my-4">
+                                        {{ error }}
+                                    </div>
 
                                 </form>
 
@@ -42,64 +46,65 @@
 </template>
 
 <script>
-import { useUserStore } from "../../stores/users";
+
 import axios from "axios";
  
 export default defineComponent({
   components: {},
   created() {},
-  mounted() {},
+  mounted() {
+
+    if (localStorage.getItem('KakuroToken')) {
+
+        this.$router.push('/home');
+            
+    }
+
+  },
   data() {
     return {
-      username: "",
-      password: "",
-      wrongPass: false,
-      error: "",
-      userData: useUserStore(),
+        email: "",
+        errorEmail: false,
+        error: "",
     };
   },
   methods: {
-    async login() {
-      try {
-        debugger;
-        console.log("Mensaje");
-        debugger;
-        
-        const data = {
-          username: this.username,
-          password: this.password,
-        };
-        const response = await axios.post(
-          "https://espacionebula.com:8000/sign-in",
-          data,
-          {
-            headers: {
-              "Access-Control-Allow-Origin": "*",
-            },
-            mode: "cors",
-          }
-        );
-        if (response.data.success) {
- 
-          this.wrongPass = false;
-          localStorage.setItem("KakuroToken", response.data.token);
-          localStorage.setItem("KakuroUsername", response.data.user.username);
-         
-          
-          localStorage.setItem("KakuroId", response.data.user._id);
-          this.userData.setUsername(localStorage.getItem("KakuroUsername"));
-          this.userData.setuserId(localStorage.getItem("KakuroId"));
- 
-          this.$router.push("/game");
-        } else {
-          this.wrongPass = true;
-          this.error = response.data.error;
-          console.log(response.data.error);
+    async resetPassword() {
+
+        try {
+
+            const data = {
+              email: this.email
+            };
+            const response = await axios.post(
+
+              "https://espacionebula.com:8000/email-password",
+              data,
+              {
+                headers: {
+                  "Access-Control-Allow-Origin": "*",
+                },
+                mode: "cors",
+              }
+
+            );
+            if (response.data.success) {
+     
+              this.$router.push("/login");
+
+            } else {
+
+              this.errorEmail = true;
+              this.error = response.data.error;
+              console.log(response.data.error);
+              
+            }
+
+        } catch (error) {
+            console.error(error);
         }
-      } catch (error) {
-        console.error(error);
-      }
     },
+
   },
   setup() {},
 });
