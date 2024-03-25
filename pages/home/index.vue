@@ -29,7 +29,7 @@
           <div class="d-flex justify-content-center">
              
             <div v-for="level in levels" :key="level._id" class="level-button p-2">
-                <button type="button" class="btn btn-success" @click="goToGame(level.name)">{{ level.name }}</button>
+                <button type="button" class="btn btn-success" @click="goToGame(level.name, level._id)">{{ level.name }}</button>
             </div>
            
           </div>
@@ -79,6 +79,8 @@ import axios from "axios";
          debugger;
          if (response.data.success) {
 
+           
+
             this.levels = response.data.levels
 
          
@@ -91,9 +93,10 @@ import axios from "axios";
          console.error(error);
        }
      },
-
-     goToGame(levelName) {
-      this.$router.push({ path: `/game`, query: { level: levelName } });
+     
+     goToGame(levelName, levelId) {
+      localStorage.setItem("KakuroLevelId", levelId);
+      this.$router.push({ path: `/game`, query: { level: levelName} });
     },
 
    },

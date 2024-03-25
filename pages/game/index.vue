@@ -2,6 +2,8 @@
   <div class="container py-5">
       
         <KakuroBoard :board="board" />
+
+        <button v-if="isLogin" class="btn btn-outline-success" type="button" @click="stopGame">Stop</button>
     
     </div>
   </template>
@@ -15,6 +17,7 @@
    data() {
      return {
        board: [],
+    
        
      };
    },
@@ -33,13 +36,14 @@
    methods: {
      async getBoard() {
        try {
-          debugger;
-          console.log("Mensaje");
-          debugger;
+         
+          
 
           const userId = localStorage.getItem('KakuroId');
-          const level_Id = '65fa4569603eb122ebd9435f';
+          const level_Id = localStorage.getItem('KakuroLevelId');
           const token = localStorage.getItem("KakuroToken");
+
+          console.log(level_Id); debugger;
 
           const dataf = { user_id: userId,
                           levelId: level_Id
@@ -59,9 +63,15 @@
           
           const data = response.data
           debugger;
+
           if (response.data.success) {
             
-            this.board = data.boards;
+            this.board = data.game;
+            console.log(this.board);
+            
+          } else if (data.error = "User already has an existing game!") {
+            
+            this.board = data.game;
             console.log(this.board);
             
           } else {
