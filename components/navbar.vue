@@ -18,7 +18,7 @@ import type { setBlockTracking } from 'vue';
                     <NuxtLink to="/home" class="nav-link active" @click.native="collapseNavbar" aria-current="page">Home</NuxtLink>
                 </li>
 
-                <li v-if="isLogin"class="nav-item">
+                <li v-if="isLogin" class="nav-item">
                     <NuxtLink to="/userHistory" class="nav-link active" @click.native="collapseNavbar" aria-current="page">My History</NuxtLink>
                 </li>
 
