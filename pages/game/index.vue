@@ -43,8 +43,6 @@
           const level_Id = localStorage.getItem('KakuroLevelId');
           const token = localStorage.getItem("KakuroToken");
 
-          console.log(level_Id);
-
           const dataf = { user_id: userId,
                           levelId: level_Id
                         }
@@ -58,21 +56,16 @@
             mode: "cors"
           });
 
-          console.log(response); 
-
-          
           const data = response.data
         
 
           if (response.data.success) {
             
-            this.board = data.game; debugger;
-            console.log(this.board);
+            this.board = data.game.game; 
             
           } else if (data.error = "User already has an existing game!") {
             
-            this.board = data.game; debugger;
-            console.log(this.board);
+            this.board = data.game; 
             
           } else {
             
