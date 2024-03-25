@@ -14,16 +14,20 @@ import type { setBlockTracking } from 'vue';
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-                <li class="nav-item">
+                <li v-if="isLogin" class="nav-item">
                     <NuxtLink to="/home" class="nav-link active" @click.native="collapseNavbar" aria-current="page">Home</NuxtLink>
                 </li>
 
-                <li class="nav-item">
+                <li v-if="isLogin"class="nav-item">
                     <NuxtLink to="/userHistory" class="nav-link active" @click.native="collapseNavbar" aria-current="page">My History</NuxtLink>
                 </li>
 
-                <li class="nav-item">
+                <li v-if="isLogin" class="nav-item">
                     <NuxtLink to="/ranking" class="nav-link active" @click.native="collapseNavbar" aria-current="page">Global Ranking</NuxtLink>
+                </li>
+
+                <li v-if="!isLogin" class="nav-item">
+                    <NuxtLink to="/login" class="nav-link active" @click.native="collapseNavbar" aria-current="page">Log in</NuxtLink>
                 </li>
 
                 <li class="nav-item">
@@ -44,16 +48,31 @@ import type { setBlockTracking } from 'vue';
 </template>
 
 <script>
+import { useUserStore } from "../../stores/users";
+
 export default {
     data() {
     return {
         isLogin: false,
+        cargo: false,
     };
   },
-  mounted() {console.log()
+  created() {
+    //this.checkAuthentication();
+  },
+  mounted() {
     if (localStorage.getItem("KakuroToken")) {
         this.isLogin = true;
     }
+    this.cargo = true;
+  },
+  watch: {
+    $route: {
+      immediate: true,
+      handler() {
+        this.checkAuthentication();
+      },
+    },
   },
     methods: {
         collapseNavbar() {
@@ -66,7 +85,17 @@ export default {
                 }
             }
         },
+        checkAuthentication() {
 
+            if (this.cargo) {
+                if (localStorage.getItem("KakuroToken")) {
+                    this.isLogin = true;
+                }else{
+                    this.isLogin = false;
+                }
+            }
+
+        },
         logOutUser(){
         localStorage.removeItem('KakuroToken');
         localStorage.removeItem('KakuroUsername');
