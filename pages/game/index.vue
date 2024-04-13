@@ -16,8 +16,8 @@
  export default defineComponent({
    data() {
      return {
-       board: [],
-    
+      board: [],
+      isLogin: false,
        
      };
    },
@@ -26,6 +26,7 @@
        this.$router.push('/login');
      } else {
 
+      this.isLogin = true;
       const levelName = this.$route.query.level; 
       console.log(levelName); 
        

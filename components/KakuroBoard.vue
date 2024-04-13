@@ -5,7 +5,7 @@
         <td
           v-for="(cell, cellIndex) in row"
           :key="`cell-${rowIndex}-${cellIndex}`"
-          :class="{'bg-dark text-white': cell === 'black', 'bg-light': cell === 'white' || Array.isArray(cell)}"
+          :class="{'bg-dark text-white': cell === 'black', 'bg-light': cell !== 'black'  }"
           @click="openCellMenu(cell, rowIndex, cellIndex)"
         >
           <!-- Cell with numbers -->
@@ -14,7 +14,7 @@
             <div class="bottom-right-number">{{ cell[1] !== 0 ? cell[1] : '' }}</div>
           </div>
           <!-- Editable cell (for user input) -->
-          <input v-else-if="cell === 'white'" type="text" class="form-control" />
+          <input v-else-if="cell === 'white' || !isNaN(cell)" type="text" class="form-control" @input="validateInput($event)" @blur="handleCellInput($event, rowIndex, cellIndex)"/>
         </td>
       </tr>
     </table>
@@ -23,6 +23,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      gameBoard: [],
+    };
+  },
   props: {
     board: {
       type: Array,
@@ -33,8 +38,33 @@ export default {
     openCellMenu(cell, rowIndex, cellIndex) {
       if (cell === 'white') {
         // logic to open menu, potentially using Bootstrap Vue's b-popover or similar
-        console.log(`Opening menu for cell at row ${rowIndex}, column ${cellIndex}`);
+        //console.log(`Opening menu for cell at row ${rowIndex}, column ${cellIndex}`);//we are not going to use it, instead we are going to use handleCellInput that it is when you left the click of  acell
       }
+    },
+    validateInput(event) {
+      
+      const inputValue = event.target.value;
+      const isValid = /^\d$/.test(inputValue) && inputValue !== '0';
+
+      if (!isValid) {
+        event.target.value = ''; 
+      }
+
+    },
+    handleCellInput(event, rowIndex, cellIndex) {
+      const value = event.target.value;
+      //console.log(`Valor ingresado en la celda (${rowIndex}, ${cellIndex}): ${value}`);
+      if (value != "") {
+
+        if (this.gameBoard.length === 0) {//here we validate that gameboard is empty, to put the first time the actual game
+          this.gameBoard = this.board;
+        }
+
+        this.gameBoard[0][rowIndex][cellIndex] = value;
+        console.log(this.gameBoard[0]);
+        //llamar a validar movimiento
+      }
+      
     }
   }
 };
