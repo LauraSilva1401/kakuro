@@ -57,7 +57,6 @@
 
           const data = response.data
         
-
           if (response.data.success) {
             
             this.board = data.game.game; 
@@ -66,6 +65,14 @@
             
             this.board = data.game; 
             
+          }else if( data.error = "Invalid token"){
+
+            localStorage.removeItem('KakuroToken');
+            localStorage.removeItem('KakuroUsername');
+            localStorage.removeItem('KakuroId');
+
+            this.$router.push('/login');;
+
           } else {
             
             console.log("There was an error with the user:" + response.data.error );
@@ -75,7 +82,7 @@
 
 
        }catch (error) {
-          this.error = error.response;
+          this.error = error;
           console.log(this.error);
         }
       },

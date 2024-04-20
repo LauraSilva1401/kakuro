@@ -13,8 +13,12 @@
             <div class="bottom-right-number">{{ cell[1] !== 0 ? cell[1] : '' }}</div>
           </div>
           <!-- Editable cell (for user input) -->
-          <input v-else-if="cell === 'white' || !isNaN(cell)" type="text" class="form-control"
+          
+          <input v-if="cell === 'white'" type="text" class="form-control"
              :class="getColorClass(rowIndex, cellIndex)" @input="validateInput($event)" @blur="handleCellInput($event, rowIndex, cellIndex)"/>
+          <input v-else-if="cell !== 'white' && cell !== 'gray'&& cell !== 'black' &&  !isNaN(cell)" :value="cell" type="text" class="form-control"
+             :class="getColorClass(rowIndex, cellIndex)" @input="validateInput($event)" @blur="handleCellInput($event, rowIndex, cellIndex)"/>
+
         </td>
       </tr>
     </table>
@@ -87,7 +91,7 @@ export default {
        try {
          
           
-         //const { user_id, Actualgame, row, column } = req.body;
+          //const { user_id, Actualgame, row, column } = req.body;
           const userId = localStorage.getItem('KakuroId');
           const token = localStorage.getItem("KakuroToken");
 
@@ -119,20 +123,95 @@ export default {
           } else {
             
             console.log("There was an error with the user:" + response.data.error );
-            
 
           }
 
 
        }catch (error) {
-          this.error = error;
-          console.log(this.error);
-        }
+        this.error = error;
+        console.log(this.error);
+       }
+
       },
       async stopGame(){
 
+        try {
+         
+          const userId = localStorage.getItem('KakuroId');
+          const token = localStorage.getItem("KakuroToken");
+
+          const dataf = { 
+                          user_id: userId
+                        }
+
+          const response = await axios.post("https://espacionebula.com:8000/stop-game", dataf,{
+              headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Authorization": `Bearer ${token}`,
+            },
+
+            mode: "cors"
+          });
+
+          const data = response.data
+        
+
+          if (response.data.success) {
+
+            this.$router.push('/home');
+            
+          } else {
+            
+            console.log("There was an error with the user:" + response.data.error );
+
+          }
+
+
+       }catch (error) {
+        this.error = error;
+        console.log(this.error);
+       }
+
       },
       async saveGame(){
+
+        try {
+
+          const userId = localStorage.getItem('KakuroId');
+          const token = localStorage.getItem("KakuroToken");
+
+          const dataf = { 
+                          user_id: userId,
+                          Actualgame: this.gameBoard
+                        }
+
+          const response = await axios.post("https://espacionebula.com:8000/save-game", dataf,{
+              headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Authorization": `Bearer ${token}`,
+            },
+
+            mode: "cors"
+          });
+
+          const data = response.data
+        
+
+          if (response.data.success) {
+
+            this.$router.push('/home');
+            
+          } else {
+            
+            console.log("There was an error with the user:" + response.data.error );
+
+          }
+
+
+       }catch (error) {
+        this.error = error;
+        console.log(this.error);
+       }
 
       },
       async Validate(){
@@ -140,7 +219,7 @@ export default {
       },
       getColorClass(rowIndex, cellIndex) {
 
-        if(typeof this.colorUpdates === 'undefined'){
+        if( this.colorUpdates.length == 0 ){
           this.colorUpdates = this.board[1];
         }
         
