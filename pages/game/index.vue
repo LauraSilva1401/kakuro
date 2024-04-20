@@ -65,6 +65,7 @@
           } else if (data.error = "User already has an existing game!") {
             
             this.board = data.game; 
+            //this.time = date.time
             
           }else if( data.error = "Invalid token"){
 
