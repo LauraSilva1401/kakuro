@@ -1,7 +1,7 @@
 <template>
   <div class="container py-5">
       
-        <KakuroBoard :board="board" />
+        <KakuroBoard :board="board" :levelName="levelName"/>
     
     </div>
   </template>
@@ -16,6 +16,7 @@
      return {
       board: [],
       isLogin: false,
+      levelName:"",
        
      };
    },
@@ -25,8 +26,8 @@
      } else {
 
       this.isLogin = true;
-      const levelName = this.$route.query.level; 
-      console.log(levelName); 
+      this.levelName = this.$route.query.level; 
+      //console.log(levelName); 
        
       this.getBoard();
 

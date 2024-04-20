@@ -26,7 +26,7 @@
 
   <button v-if="isLogin" class="btn btn-outline-success" type="button" @click="stopGame">Stop</button>
   <button v-if="isLogin" class="btn btn-outline-success" type="button" @click="saveGame">Save</button>
-  <button v-if="isLogin" class="btn btn-outline-success" type="button" @click="valdiateGame">Validate</button>
+  <button v-if="isLogin" class="btn btn-outline-success" type="button" @click="validateGame">Validate</button>
 
 </template>
 
@@ -55,7 +55,11 @@ export default {
     board: {
       type: Array,
       required: true
-    }
+    },
+    levelName: {
+      type: String,
+      required: true
+    },
   },
   methods: {
     
@@ -214,7 +218,46 @@ export default {
        }
 
       },
-      async Validate(){
+      async validateGame(){
+
+        try {
+
+          const userId = localStorage.getItem('KakuroId');
+          const token = localStorage.getItem("KakuroToken");
+
+          const dataf = { 
+                          user_id: userId,
+                          Actualgame: this.board,
+                          level: this.levelName
+                        }
+
+          const response = await axios.post("https://espacionebula.com:8000/validate-game", dataf,{
+              headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Authorization": `Bearer ${token}`,
+            },
+
+            mode: "cors"
+          });
+
+          const data = response.data
+        
+
+          if (response.data.success) {
+            console.log(response.data.msg);
+            //this.$router.push('/home');
+            
+          } else {
+            
+            console.log("There was an error with the user:" + response.data.error );
+
+          }
+
+
+       }catch (error) {
+        this.error = error;
+        console.log(this.error);
+       }
 
       },
       getColorClass(rowIndex, cellIndex) {
