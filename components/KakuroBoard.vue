@@ -6,7 +6,6 @@
           v-for="(cell, cellIndex) in row"
           :key="`cell-${rowIndex}-${cellIndex}`"
           :class="{'bg-dark text-white': cell === 'black', 'bg-light': cell !== 'black'  }"
-          @click="openCellMenu(cell, rowIndex, cellIndex)"
         >
           <!-- Cell with numbers -->
           <div v-if="Array.isArray(cell)" class="number-cell">
@@ -14,18 +13,38 @@
             <div class="bottom-right-number">{{ cell[1] !== 0 ? cell[1] : '' }}</div>
           </div>
           <!-- Editable cell (for user input) -->
-          <input v-else-if="cell === 'white' || !isNaN(cell)" type="text" class="form-control" @input="validateInput($event)" @blur="handleCellInput($event, rowIndex, cellIndex)"/>
+          <input v-else-if="cell === 'white' || !isNaN(cell)" type="text" class="form-control"
+             :class="getColorClass(rowIndex, cellIndex)" @input="validateInput($event)" @blur="handleCellInput($event, rowIndex, cellIndex)"/>
         </td>
       </tr>
     </table>
   </div>
+
+  <button v-if="isLogin" class="btn btn-outline-success" type="button" @click="stopGame">Stop</button>
+  <button v-if="isLogin" class="btn btn-outline-success" type="button" @click="saveGame">Save</button>
+  <button v-if="isLogin" class="btn btn-outline-success" type="button" @click="valdiateGame">Validate</button>
+
 </template>
 
 <script>
+ import axios from "axios";
+
 export default {
-  data() {
+  
+   mounted() {
+     if (!localStorage.getItem('KakuroToken')) {
+       this.$router.push('/login');
+     } else {
+
+      this.isLogin = true; 
+
+     }
+   },
+   data() {
     return {
       gameBoard: [],
+      isLogin: false,
+      colorUpdates: [],
     };
   },
   props: {
@@ -35,12 +54,7 @@ export default {
     }
   },
   methods: {
-    openCellMenu(cell, rowIndex, cellIndex) {
-      if (cell === 'white') {
-        // logic to open menu, potentially using Bootstrap Vue's b-popover or similar
-        //console.log(`Opening menu for cell at row ${rowIndex}, column ${cellIndex}`);//we are not going to use it, instead we are going to use handleCellInput that it is when you left the click of  acell
-      }
-    },
+    
     validateInput(event) {
       
       const inputValue = event.target.value;
@@ -61,11 +75,80 @@ export default {
         }
 
         this.gameBoard[0][rowIndex][cellIndex] = value;
-        console.log(this.gameBoard[0]);
+        //console.log(this.gameBoard[0]);
         //llamar a validar movimiento
+        this.evaluateMove(rowIndex, cellIndex);
+
+
       }
       
-    }
+    },
+    async evaluateMove(row, column) {
+       try {
+         
+          
+         //const { user_id, Actualgame, row, column } = req.body;
+          const userId = localStorage.getItem('KakuroId');
+          const token = localStorage.getItem("KakuroToken");
+
+          const dataf = { user_id: userId,
+                          Actualgame: this.gameBoard,
+                          row: row, 
+                          column: column
+                        }
+
+          const response = await axios.post("https://espacionebula.com:8000/evaluate-move", dataf,{
+              headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Authorization": `Bearer ${token}`,
+            },
+
+            mode: "cors"
+          });
+
+          const data = response.data
+        
+
+          if (response.data.success) {
+            console.log(data.game);
+            //this.board = data.game; 
+            //aca mandar a pintar los colores
+            this.colorUpdates = data.game[1];
+            this.board[1] = data.game[1];
+            
+          } else {
+            
+            console.log("There was an error with the user:" + response.data.error );
+            
+
+          }
+
+
+       }catch (error) {
+          this.error = error;
+          console.log(this.error);
+        }
+      },
+      async stopGame(){
+
+      },
+      async saveGame(){
+
+      },
+      async Validate(){
+
+      },
+      getColorClass(rowIndex, cellIndex) {
+
+        if(typeof this.colorUpdates === 'undefined'){
+          this.colorUpdates = this.board[1];
+        }
+        
+        if (this.colorUpdates.length > 0 && this.colorUpdates[rowIndex][cellIndex] === 'red') {
+          return 'text-danger'; // Clase de Bootstrap para texto rojo
+        }
+        return '';
+      }
   }
 };
 </script>

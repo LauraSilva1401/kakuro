@@ -2,8 +2,6 @@
   <div class="container py-5">
       
         <KakuroBoard :board="board" />
-
-        <button v-if="isLogin" class="btn btn-outline-success" type="button" @click="stopGame">Stop</button>
     
     </div>
   </template>
@@ -77,8 +75,8 @@
 
 
        }catch (error) {
-          this.error = error.response.toString();
-          console.error(error);
+          this.error = error.response;
+          console.log(this.error);
         }
       },
     }
