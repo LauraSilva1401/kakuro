@@ -186,7 +186,7 @@ export default {
 
           const dataf = { 
                           user_id: userId,
-                          Actualgame: this.gameBoard
+                          Actualgame: this.board
                         }
 
           const response = await axios.post("https://espacionebula.com:8000/save-game", dataf,{
