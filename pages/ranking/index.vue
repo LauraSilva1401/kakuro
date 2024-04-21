@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-      <h1 class="title">User History</h1>
+      <h1 class="title">{{levelName}} Level - Rank</h1>
       <table class="table">
         <thead>
           <tr>
@@ -10,9 +10,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in history" :key="index">
+          <tr v-for="(item, index) in histories" :key="index">
             <td>{{ index + 1 }}</td>
-            <td><NuxtLink :to="`/game/${item.id}`">{{ item.level }}</NuxtLink></td>
+            <td><NuxtLink :to="`/ranking/${item.id}`">{{ item.level }}</NuxtLink></td>
             <td>{{ item.time }}</td>
           </tr>
         </tbody>
@@ -27,7 +27,8 @@
   export default defineComponent({
     data() {
       return {
-        history: [],
+        histories: [],
+        levelName: '',
         
       };
     },
@@ -35,23 +36,26 @@
       if (!localStorage.getItem('KakuroToken')) {
         this.$router.push('/login');
       } else {
+
+        this.levelName = this.$route.query.level; 
         
-        this.getHistory();
+        this.getHistories();
       }
     },
     methods: {
-      async getHistory() {
+      async getHistories() {
         try {
 
-          const userId = localStorage.getItem('KakuroId');
+          /* const userId = localStorage.getItem('KakuroId'); */
           
-
+          const levelName = this.$route.query.level;
           const token = localStorage.getItem("KakuroToken");
+          const level_Id = localStorage.getItem('KakuroLevelId');
 
-          const dataf = { user_id: userId,
+          const dataf = { level: levelName,
                         }
 
-          const response = await axios.post("https://espacionebula.com:8000/get-user-history", dataf,{
+          const response = await axios.post("https://espacionebula.com:8000/get-records", dataf,{
             headers: {
             "Access-Control-Allow-Origin": "*",
               "Authorization": `Bearer ${token}`,
@@ -62,13 +66,13 @@
 
           console.log(response); 
 
-          
+          debugger
           const data = response.data
-
+          debugger
           if (response.data.success) {
             
-            this.history = data.histories;
-            console.log(this.history);
+            this.histories = data.histories;
+            console.log(this.histories);
             
           } else {
             
@@ -87,7 +91,7 @@
   
   <style scoped>
 
-  .title {
+.title {
     margin-top: 200px;
     margin-bottom: 50px;
     font-size: 65px;
@@ -102,7 +106,6 @@
   .container {
     height: 620px;
   }
-
 
 
   

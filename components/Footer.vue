@@ -1,6 +1,6 @@
 <template>
 
-    <div class="">
+    <div class="foot">
         <footer class="py-3">
 
             <ul class="nav justify-content-center pb-3 mb-3">
@@ -33,13 +33,14 @@
 footer{
 
     background-color: white;
-    margin-bottom: 0 !important;
-
-   
+    
 }
+
+
 
 .nav{
     padding-bottom: 0 !important;
+
     
 }
 

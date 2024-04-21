@@ -31,7 +31,8 @@
 
     .container {
         margin-top: 5%;
-        margin-bottom: 5%;
+        margin-bottom: 1.5%;
+       
     }
 
 </style>

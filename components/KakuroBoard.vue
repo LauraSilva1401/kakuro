@@ -1,4 +1,5 @@
 <template>
+  <div class="container">
   <div class="kakuro-board">
     <table class="table table-bordered">
       <tr v-for="(row, rowIndex) in board[0]" :key="`row-${rowIndex}`">
@@ -24,9 +25,22 @@
     </table>
   </div>
 
-  <button v-if="isLogin" class="btn btn-outline-success" type="button" @click="stopGame">Stop</button>
-  <button v-if="isLogin" class="btn btn-outline-success" type="button" @click="saveGame">Save</button>
-  <button v-if="isLogin" class="btn btn-outline-success" type="button" @click="validateGame">Validate</button>
+  <div v-if="successMessage" class="alert alert-success mt-3">
+      {{ successMessage }}
+  </div>
+
+  <div class="level-button p-5">
+
+    <button v-if="isLogin" class="btn btn-outline-success" type="button" @click="stopGame">Stop</button>
+    <button v-if="isLogin" class="btn btn-outline-success" type="button" @click="saveGame">Save</button>
+    <button v-if="isLogin" class="btn btn-outline-success" type="button" @click="validateGame">Validate</button>
+
+
+  </div>
+
+  </div>
+
+  
 
 </template>
 
@@ -49,6 +63,7 @@ export default {
       gameBoard: [],
       isLogin: false,
       colorUpdates: [],
+      successMessage: '',
     };
   },
   props: {
@@ -244,12 +259,17 @@ export default {
         
 
           if (response.data.success) {
-            console.log(response.data.msg);
-            //this.$router.push('/home');
+            this.successMessage = response.data.msg;
+            setTimeout(() => {
+
+              this.$router.push('/home');
+              
+            }, 5000);
+            
             
           } else {
-            
-            console.log("There was an error with the user:" + response.data.error );
+            this.successMessage = "There was an error with the user:" + response.data.msg;
+            //console.log("There was an error with the user:" + response.data.error );
 
           }
 
@@ -276,9 +296,14 @@ export default {
 </script>
 
 <style scoped>
+
+
 .kakuro-board {
+  display: flex;
+  justify-content: center;
   max-width: 300px;
   margin: 0 auto;
+  
 }
 
 table {
@@ -331,5 +356,16 @@ td {
   border: none; /* Optional: removes border */
   padding: 0; /* Removes padding to prevent overflow */
   text-align: center; /* Centers text */
+}
+
+.btn {
+
+  
+  margin-right: 20px;
+  font-size: 35px;
+  width: 150px;
+  height: 100px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
+
 }
 </style>

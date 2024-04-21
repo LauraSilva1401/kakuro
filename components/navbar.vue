@@ -23,7 +23,7 @@ import type { setBlockTracking } from 'vue';
                 </li>
 
                 <li v-if="isLogin" class="nav-item">
-                    <NuxtLink to="/ranking" class="nav-link active" @click.native="collapseNavbar" aria-current="page">Global Ranking</NuxtLink>
+                    <NuxtLink to="/globalRanking" class="nav-link active" @click.native="collapseNavbar" aria-current="page">Global Ranking</NuxtLink>
                 </li>
 
                 <li v-if="!isLogin" class="nav-item">

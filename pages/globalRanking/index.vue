@@ -1,8 +1,8 @@
 <template>
     <div class="container py-5">
       <div class="row justify-content-center">
-        <div class="col-md-12 text-center">
-          <h1 class="logo mb-4">KAKURO+</h1>
+        <div class="col-md-8 text-center figure">
+          
           <div class="pixel-art">
             
             <div class="d-inline-block bg-gray square"></div>
@@ -10,7 +10,7 @@
             <div class="d-inline-block bg-gray square"></div>
           </div>
 
-          <div class="pixel-art figure">
+          <div class="pixel-art">
             
             <div class="d-inline-block bg-gray square"></div>
             <div class="d-inline-block bg-orange square"></div>
@@ -25,11 +25,11 @@
             <div class="d-inline-block bg-gray square"></div>
           </div>
           
-          <h2 class="text-center my-4">Select Game Difficulty</h2>
+          <h2 class="text-center my-4">Select Game Difficulty for Global Ranking</h2>
           <div class="d-flex justify-content-center">
              
             <div v-for="level in levels" :key="level._id" class="level-button p-2">
-                <button type="button" class="btn btn-success" @click="goToGame(level.name, level._id)">{{ level.name }}</button>
+                <button type="button" class="btn btn-success" @click="goToRanking(level.name, level._id)">{{ level.name }}</button>
             </div>
            
           </div>
@@ -91,9 +91,9 @@ import axios from "axios";
        }
      },
      
-     goToGame(levelName, levelId) {
+     goToRanking(levelName, levelId) {
       localStorage.setItem("KakuroLevelId", levelId);
-      this.$router.push({ path: `/game`});
+      this.$router.push({ path: `/ranking`, query: { level: levelName} });
     },
 
    },
@@ -147,22 +147,115 @@ import axios from "axios";
   }
 
   .container {
-    height: 750px;
+    min-height: 75vh;
     
   }
 
- 
+  .figure{
+    margin-top: 5%;
+  }
 
   
+
+
 @media (max-width: 768px) {
-  .logo {
-    font-size: 2rem; 
+
+  .container {
+    min-height: 77vh;
+    
   }
   .square {
-    width: 15vw; 
-    height: 15vw; 
-    margin: 1.5vw;
+    width: 6vw; 
+    height: 6vw; 
+    margin: 0.5vw; 
   }
+
+  .btn {
+    font-size: 1rem; 
+    width: 20vw; 
+    height: 12vw; 
+  }
+
+  .my-4 {
+    font-size: 2rem; 
+  }
+
+  .figure{
+    padding-top: 50px;
+  }
+}
+
+
+@media (max-width: 600px) {
+
+.container {
+  min-height: 80vh;
+  
+}
+.square {
+  margin: 0.4vw; 
+  margin-top: -1px;
+}
+
+.figure{
+  padding-top: 100px;
+}
+}
+
+@media (max-width: 400px) {
+
+
+.figure{
+  padding-top: 160px;
+}
+}
+
+@media (max-width: 340px) {
+
+  .square {
+    width: 10vw; 
+    height: 10vw; 
+   
+  }
+  .btn {
+    font-size: 0.8rem; 
+    
+  }
+
+}
+
+@media (max-width: 340px) {
+
+.square {
+  width: 12vw; 
+  height: 12vw; 
+  margin: 0.9vw; 
+ 
+}
+.btn {
+  font-size: 0.8rem; 
+  width: 24vw; 
+  
+  
+}
+
+}
+
+@media (max-width: 260px) {
+
+.square {
+  width: 14vw; 
+  height: 14vw; 
+  margin: 0.9vw; 
+ 
+}
+.btn {
+  font-size: 0.8rem; 
+  width: 28vw; 
+  
+  
+}
+
 }
   
   </style>
