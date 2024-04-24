@@ -23,8 +23,12 @@
 
                                     <button class="btn btn-outline-light btn-lg px-5" type="submit" >Recover</button>
 
-                                    <div v-if="errorEmail" class="text-red-500 text-center my-4">
+                                    <div v-if="errorEmail" class="alert alert-success mt-3">
                                         {{ error }}
+                                    </div>
+
+                                    <div v-if="success" class="alert alert-success mt-3">
+                                      If your email is in our data base, you should receive a reset password email soon.
                                     </div>
 
                                 </form>
@@ -66,6 +70,7 @@ export default defineComponent({
         email: "",
         errorEmail: false,
         error: "",
+        success: false,
     };
   },
   methods: {
@@ -89,12 +94,20 @@ export default defineComponent({
 
             );
             if (response.data.success) {
+
+              this.success = true;
+              this.errorEmail = false;
      
-              this.$router.push("/login");
+                setTimeout(() => {
+
+                this.$router.push('/login');
+
+                }, 5000);
 
             } else {
 
               this.errorEmail = true;
+              this.success = false;
               this.error = response.data.error;
               console.log(response.data.error);
               

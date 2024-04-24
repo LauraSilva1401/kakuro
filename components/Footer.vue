@@ -26,7 +26,7 @@
 
 </template>
 
-<style>
+<style scoped>
 
 
 
@@ -47,6 +47,21 @@ footer{
 .nav-item, .lajotek{ 
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
 }
+
+@media (max-width: 230px) {
+    .nav-item, .lajotek {
+        font-size: 15px; 
+    }
+
+    .nav-link {
+        padding: 4px 5px; 
+    }
+
+    
+}
+
+
+
 
 
 </style>

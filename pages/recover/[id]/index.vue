@@ -134,7 +134,7 @@ export default defineComponent({
 
                     if (response.data.success) {
 
-                        debugger;
+                        this.$router.push("/login");
                       
                     } else {
                         
@@ -171,6 +171,8 @@ export default defineComponent({
                 return false;
 
             }
+
+            alert("Password has been successfully updated. You will now be redirected to our login page");
 
             return true; 
 

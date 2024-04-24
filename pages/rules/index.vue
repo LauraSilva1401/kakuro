@@ -32,15 +32,15 @@
   
   <style scoped>
   .container {
-    min-height: 80vh; /* Full screen height */
-    padding-top: 50px; /* Reduced padding for smaller screens */
+    min-height: 80vh; 
+    padding-top: 50px; 
     display: flex;
     justify-content: center;
     align-items: center;
   }
   
   .kakuro-rules {
-    max-width: 90%; /* Use a percentage-based width for responsiveness */
+    max-width: 90%; 
     padding: 20px;
     background-color: #f8f9fa;
     border: 1px solid #dee2e6;
@@ -52,8 +52,8 @@
   .kakuro-rules h1 {
     text-align: center;
     color: #343a40;
-    margin-bottom: 20px; /* Reduced margin */
-    font-size: 1.75rem; /* Larger font size for readability */
+    margin-bottom: 20px; 
+    font-size: 1.75rem; 
   }
   
   .par {

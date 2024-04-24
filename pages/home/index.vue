@@ -25,8 +25,8 @@
             <div class="d-inline-block bg-gray square"></div>
           </div>
           
-          <h2 class="text-center my-4">Select Game Difficulty</h2>
-          <div class="d-flex justify-content-center">
+          <h2 class="text-center my-4 select">Select Game Difficulty</h2>
+          <div class="d-flex justify-content-center but">
              
             <div v-for="level in levels" :key="level._id" class="level-button p-2">
                 <button type="button" class="btn btn-success" @click="goToGame(level.name, level._id)">{{ level.name }}</button>
@@ -154,15 +154,59 @@ import axios from "axios";
  
 
   
-@media (max-width: 768px) {
+  @media (max-width: 768px) {
   .logo {
-    font-size: 2rem; 
+   margin-top: 20px;
+   font-size: 5rem; 
   }
+
+  .select {
+    font-size: 40px;
+  }
+
   .square {
-    width: 15vw; 
-    height: 15vw; 
-    margin: 1.5vw;
+    width: 10vw; 
+    height: 10vw; 
   }
+
+  .btn {
+    font-size: 1rem; 
+    
+  }
+}
+
+@media (max-width: 500px) {
+  .logo {
+    font-size: 4rem;
+    margin-top: 90px;
+   
+  }
+
+  .btn {
+    font-size: 1rem; 
+    width: 30vw; 
+    height: 16vw; 
+  }
+
+
+
+}
+
+@media (max-width: 335px) {
+  .logo {
+    font-size: 4rem;
+    margin-top: 90px;
+   
+  }
+
+  .btn {
+
+    width: 25vw; 
+
+  }
+
+
+
 }
   
   </style>

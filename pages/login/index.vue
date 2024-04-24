@@ -28,9 +28,12 @@
 
                                 <button class="btn btn-outline-light btn-lg px-5" type="submit" >Login</button>
 
-                                <div v-if="wrongPass" class="text-red-500 text-center my-4">
-                                     {{ error }}
+                                
+                                <div v-if="error" class="alert alert-success mt-3">
+                                    {{ error }}
                                 </div>
+
+                                
 
                             </form>
 
@@ -71,6 +74,7 @@ export default defineComponent({
             wrongPass: false,
             error: "",
             userData: useUserStore(),
+
         };
     },
   methods: {

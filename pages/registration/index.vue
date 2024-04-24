@@ -44,13 +44,22 @@
                                     <label class="form-label" for="password">Password</label>
                                 </div>
 
+                                <div v-if="wrongPass" class="alert alert-success mt-3">
+                                              {{ error }}
+                                </div>
+
+                                <div v-if="success" class="alert alert-success mt-3">
+                                      You have successfully registered. Wait a few seconds to be redirected to our login page.
+                                </div>
+
+                                <div v-if="password.length > 0 && !isPasswordValid" class="alert alert-success mt-3">
+                                  Password must be between 8 and 20 characters.
+                                </div>
                               
 
                                 <button class="btn btn-outline-light btn-lg px-5" type="submit" >Register</button>
 
-                                <div v-if="wrongPass" class="text-red-500 text-center my-4">
-                                              {{ error }}
-                                </div>
+                                
 
                             </form>
 
@@ -86,6 +95,7 @@ export default defineComponent({
       username: "",
       password: "",
       wrongPass: false,
+      success: false,
       error: "",
       userData: useUserStore(),
     };
@@ -93,9 +103,9 @@ export default defineComponent({
   methods: {
     async registration() {
       try {
-        debugger;
+        
         console.log("Mensaje");
-        debugger;
+        
         
         const data = {
           email: this.email,
@@ -114,12 +124,20 @@ export default defineComponent({
             mode: "cors",
           }
         );
+        debugger
         if (response.data.success) {
  
           this.wrongPass = false;
+          this.success = true;
+
+          setTimeout(() => {
+
+            this.$router.push('/login');
+
+          }, 5000);
           
  
-          this.$router.push("/login");
+          
         } else {
           this.wrongPass = true;
           this.error = response.data.error;
@@ -131,9 +149,24 @@ export default defineComponent({
     },
   },
   setup() {},
+  computed: {
+    
+    isPasswordValid() {
+      return this.password.length >= 8 && this.password.length <= 20;
+    }
+  }
 });
 
 
 
 
 </script>
+
+<style scoped>
+
+.vh-100 {
+  margin-bottom: 200px;
+}
+
+
+</style>

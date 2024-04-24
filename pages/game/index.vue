@@ -75,22 +75,30 @@
           });
 
           const data = response.data
-          debugger
+          
           if (response.data.success) {
-            debugger
+           
             this.board = data.game.game;
             this.time = data.game.time 
             this.startTime = new Date(this.time).getTime();
             this.boardSize = data.game.game[0].length
             
           } else if (data.error === "User already has an existing game!") {
-            debugger
+            
             this.board = data.game; 
             this.time = data.time
             this.startTime = new Date(this.time).getTime();
             this.boardSize = data.game[0].length
             
           }else if( data.error = "Invalid token"){
+
+            localStorage.removeItem('KakuroToken');
+            localStorage.removeItem('KakuroUsername');
+            localStorage.removeItem('KakuroId');
+
+            this.$router.push('/login');
+
+          } else if( data.error = "This user is not the owner of the account."){
 
             localStorage.removeItem('KakuroToken');
             localStorage.removeItem('KakuroUsername');
@@ -160,7 +168,23 @@
 
   
 
+  @media (max-width: 768px) {
+  .logo {
+    font-size: 3rem; 
+    margin-top: 50px;
+  }
+  .timer {
+    font-size: 2.5rem;
+  }
+}
 
+@media (max-width: 440px) {
+  .logo {
+    margin-top: 60px;
+    font-size: 2.5rem;
+  }
+  
+}
   
 
   

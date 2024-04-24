@@ -82,8 +82,17 @@ import axios from "axios";
 
          
          } else {
+
+            if (response.data.error === "This user is not the owner of the account.")
+              {
+                localStorage.removeItem('KakuroToken');
+                localStorage.removeItem('KakuroUsername');
+                localStorage.removeItem('KakuroId');
+
+                this.$router.push('/login');
+              }
            
-           this.error = response.data.error;
+          this.error = response.data.error;
            console.log(response.data.error);
          }
        } catch (error) {
@@ -210,19 +219,6 @@ import axios from "axios";
 }
 }
 
-@media (max-width: 340px) {
-
-  .square {
-    width: 10vw; 
-    height: 10vw; 
-   
-  }
-  .btn {
-    font-size: 0.8rem; 
-    
-  }
-
-}
 
 @media (max-width: 340px) {
 

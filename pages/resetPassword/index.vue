@@ -67,9 +67,9 @@ export default defineComponent({
   methods: {
     async login() {
       try {
-        debugger;
+        
         console.log("Mensaje");
-        debugger;
+        
         
         const data = {
           username: this.username,

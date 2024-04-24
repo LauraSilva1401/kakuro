@@ -103,7 +103,10 @@ export default {
         this.evaluateMove(rowIndex, cellIndex);
 
 
+      }else {
+        this.gameBoard[0][rowIndex][cellIndex] = value;
       }
+
       
     },
     async evaluateMove(row, column) {
@@ -141,7 +144,20 @@ export default {
             
           } else {
             
-            console.log("There was an error with the user:" + response.data.error );
+            if (response.data.error === "This user is not the owner of the account."){
+
+              localStorage.removeItem('KakuroToken');
+              localStorage.removeItem('KakuroUsername');
+              localStorage.removeItem('KakuroId');
+              this.$router.push('/login');
+
+              } else if (response.data.error === "User does not have an existing game!")
+              {
+                this.$router.push('/home');
+              }
+
+
+              console.log("There was an error with the user:" + response.data.error );
 
           }
 
@@ -180,6 +196,20 @@ export default {
             this.$router.push('/home');
             
           } else {
+            
+            if (response.data.error === "This user is not the owner of the account."){
+
+              localStorage.removeItem('KakuroToken');
+              localStorage.removeItem('KakuroUsername');
+              localStorage.removeItem('KakuroId');
+              this.$router.push('/login');
+
+            } else if (response.data.error === "User does not have an existing game!") {
+
+                this.$router.push('/home');
+
+            }
+          
             
             console.log("There was an error with the user:" + response.data.error );
 
@@ -221,6 +251,20 @@ export default {
             this.$router.push('/home');
             
           } else {
+
+            if (response.data.error === "This user is not the owner of the account."){
+
+              localStorage.removeItem('KakuroToken');
+              localStorage.removeItem('KakuroUsername');
+              localStorage.removeItem('KakuroId');
+
+              this.$router.push('/login');
+
+            } else if (response.data.error === "User does not have an existing game!") {
+
+                this.$router.push('/home');
+
+            }
             
             console.log("There was an error with the user:" + response.data.error );
 
@@ -268,9 +312,27 @@ export default {
             
             
           } else {
-            this.successMessage = "There was an error with the user:" + response.data.msg;
-            //console.log("There was an error with the user:" + response.data.error );
+            if (response.data.error){
+                  if (response.data.error === "This user is not the owner of the account."){
 
+                    localStorage.removeItem('KakuroToken');
+                    localStorage.removeItem('KakuroUsername');
+                    localStorage.removeItem('KakuroId');
+
+                    this.$router.push('/login');
+
+                  } else if (response.data.error === "User does not have an existing game!") {
+
+                    this.$router.push('/home');
+
+                  }
+
+                  console.log("There was an error with the user:" + response.data.error );
+
+            }else{
+              
+              this.successMessage = response.data.msg;
+            }
           }
 
 
@@ -307,23 +369,23 @@ export default {
 }
 
 table {
-  table-layout: fixed; /* Ensures the table respects set widths */
-  width: 100%; /* Adjust based on your requirements */
+  table-layout: fixed; 
+  width: 100%; 
 }
 
 td {
-  width: 60px; /* Square size width */
-  height: 60px; /* Square size height */
-  overflow: hidden; /* Keeps content from spilling out */
-  vertical-align: middle; /* Centers content vertically */
-  text-align: center; /* Centers content horizontally */
+  width: 60px; 
+  height: 60px; 
+  overflow: hidden; 
+  vertical-align: middle; 
+  text-align: center; 
 }
 
 .number-cell {
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: #D3D3D3; /* Sets gray background for number cells */
+  background-color: #D3D3D3; 
 }
 
 .top-left-number,
@@ -332,12 +394,12 @@ td {
   font-size: 0.75rem;
 }
 
-/* Adjustments for number positioning */
+
 .bottom-left-number {
   position: absolute;
-  font-size: 0.75rem; /* Adjust size as needed */
-  bottom: 2px; /* Positions at the bottom of the cell */
-  left: 2px; /* Positions at the left of the cell */
+  font-size: 0.75rem; 
+  bottom: 2px; 
+  left: 2px; 
 }
 
 .top-left-number {
@@ -351,11 +413,11 @@ td {
 }
 
 .form-control {
-  width: 100%; /* Ensures the input fits in the cell */
-  height: 100%; /* Ensures the input covers the cell */
-  border: none; /* Optional: removes border */
-  padding: 0; /* Removes padding to prevent overflow */
-  text-align: center; /* Centers text */
+  width: 100%; 
+  height: 100%; 
+  border: none; 
+  padding: 0; 
+  text-align: center; 
 }
 
 .btn {
@@ -366,6 +428,79 @@ td {
   width: 150px;
   height: 100px;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
+
+}
+
+
+@media (max-width: 768px) {
+    .btn {
+
+      font-size: 25px;
+      width: 100px;
+      height: 50px;
+      
+     }
+}
+
+@media (max-width: 503px) {
+    .btn {
+
+      font-size: 20px;
+      width: 90px;
+      height: 60px;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
+     }
+}
+
+@media (max-width: 473px) {
+    .btn {
+
+      font-size: 20px;
+      width: 80px;
+      height: 60px;
+    }
+}
+
+@media (max-width: 443px) {
+  .btn{
+    font-size: 0.8rem; 
+    width: 15vw; 
+    height: 50px;
+  }
+}
+
+
+@media (max-width: 370px) {
+
+.square {
+  width: 12vw; 
+  height: 12vw; 
+  margin: 0.9vw; 
+ 
+}
+.btn {
+  font-size: 1rem; 
+  width:30vw; 
+  margin-top: 10px;
+  
+}
+
+}
+
+@media (max-width: 260px) {
+
+.square {
+  width: 14vw; 
+  height: 14vw; 
+  margin: 0.9vw; 
+ 
+}
+.btn {
+  font-size: 0.8rem; 
+  width: 28vw; 
+  
+  
+}
 
 }
 </style>

@@ -4,20 +4,26 @@
       <table class="table">
         <thead>
           <tr>
-            <th>#</th>
-            <th>Level</th>
-            <th>Time</th>
+            <th scope="col">#</th>
+            <th scope="col">Username</th>
+            <th scope="col">Level</th>
+            <th scope="col">Time</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(item, index) in histories" :key="index">
-            <td>{{ index + 1 }}</td>
+            <th scope="row">{{ index + 1 }}</th>
+            <td>{{ item.username }}</td>
             <td><NuxtLink :to="`/ranking/${item.id}`">{{ item.level }}</NuxtLink></td>
             <td>{{ item.time }}</td>
           </tr>
         </tbody>
       </table>
     </div>
+
+
+  
+
   </template>
   
   <script>
@@ -66,15 +72,18 @@
 
           console.log(response); 
 
-          debugger
+          
           const data = response.data
-          debugger
+          
           if (response.data.success) {
             
             this.histories = data.histories;
+            
             console.log(this.histories);
             
           } else {
+
+            
             
             console.log("There was an error with the user:" + response.data.error );
             
@@ -94,7 +103,7 @@
 .title {
     margin-top: 200px;
     margin-bottom: 50px;
-    font-size: 65px;
+    font-size: 80px;
     color: #4000ff; 
     font-family: 'Your-Pixel-Font', sans-serif;
     font-weight: bold;
@@ -104,8 +113,32 @@
   
 
   .container {
-    height: 620px;
+    min-height: 100vh;
   }
+
+  @media (max-width: 767px) {
+
+   
+  .title {
+    font-size: 40px; 
+  }
+}
+
+  @media (max-width: 500px) {
+  .title {
+    font-size: 3rem;
+  }
+  
+ 
+}
+
+@media (max-width: 250px) {
+  .title {
+    font-size: 2rem;
+  }
+  
+ 
+}
 
 
   
