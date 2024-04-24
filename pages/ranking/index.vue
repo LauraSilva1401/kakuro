@@ -77,7 +77,12 @@
           
           if (response.data.success) {
             
-            this.histories = data.histories;
+            this.histories = data.histories.map(item => {
+              return {
+                ...item,
+                time: this.convertToMinutesAndSeconds(item.time)
+              }
+            })
             
             console.log(this.histories);
             
@@ -93,6 +98,16 @@
           this.error = error.toString();
           console.error(error);
         }
+      },
+      convertToMinutesAndSeconds(decimalMinutes) {
+          
+            const totalSeconds = decimalMinutes * 60;
+            
+            
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = Math.round(totalSeconds % 60);
+
+            return `${minutes} minutes ${seconds} seconds`;
       },
     }
   });

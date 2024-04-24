@@ -67,7 +67,12 @@
 
           if (response.data.success) {
             
-            this.history = data.histories;
+            this.history = data.histories.map(item => {
+              return {
+                ...item,
+                time: this.convertToMinutesAndSeconds(item.time)
+              }
+            })
             console.log(this.history);
             
           } else if( data.error = "This user is not the owner of the account."){
@@ -88,6 +93,17 @@
           this.error = error.toString();
           console.error(error);
         }
+      },
+
+      convertToMinutesAndSeconds(decimalMinutes) {
+          
+          const totalSeconds = decimalMinutes * 60;
+          
+          
+          const minutes = Math.floor(totalSeconds / 60);
+          const seconds = Math.round(totalSeconds % 60);
+
+          return `${minutes} minutes ${seconds} seconds`;
       },
     }
   });
